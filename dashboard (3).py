@@ -165,6 +165,7 @@ def build_master():
     try:
         products   = pd.read_csv("olist_products_dataset.csv")
         items      = pd.read_csv("olist_order_items_dataset.csv")
+        items = items.sort_values(["order_id", "order_item_id"])
         items_d    = items.drop_duplicates("order_id", keep="first")[["order_id","product_id"]]
 
         try:
@@ -647,7 +648,7 @@ elif page.startswith("📦"):
         avg_review = ("review_score", "mean"),
         avg_delay  = ("delay_days",   "mean"),
     ).reset_index()
-    cat_stats = cat_stats[cat_stats["orders"] >= 200]
+    cat_stats = cat_stats[cat_stats["orders"] > 200]
     cat_stats["pct_late_pct"] = (cat_stats["pct_late"] * 100).round(2)
     cat_stats["avg_review"]   = cat_stats["avg_review"].round(2)
     cat_stats["avg_delay"]    = cat_stats["avg_delay"].round(1)
