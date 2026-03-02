@@ -639,7 +639,7 @@ elif page.startswith("📦"):
     st.markdown("<div class='stag'>Story 6 — Candidate's Choice: Bubble Chart</div>", unsafe_allow_html=True)
 
     # notebook cells 37-38
-    cat_df = df.dropna(subset=["product_category_name_english"]).copy()
+    cat_df = delivered.dropna(subset=["product_category_name_english"]).copy()
     cat_df["is_late"] = cat_df["delay_days"] > 0
 
     cat_stats = cat_df.groupby("product_category_name_english").agg(
