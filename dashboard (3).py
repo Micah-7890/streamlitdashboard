@@ -321,9 +321,11 @@ if page.startswith("📊"):
 
     # donut (mirrors notebook cell 21 bar chart)
     with col1:
-        counts = df["delay_status"].value_counts().reindex(["On Time","Late","Super Late"]).fillna(0)
+        counts = df["delay_status"].value_counts(dropna=False)
+        counts3 = counts.reindex(["On Time","Late","Super Late"]).fillna(0)
+        donut_total = int(counts3.sum())
         fig = go.Figure(go.Pie(
-            labels=counts.index, values=counts.values, hole=0.6,
+            labels=counts3.index, values=counts3.values, hole=0.6,
             marker_colors=[PAL["On Time"], PAL["Late"], PAL["Super Late"]],
             hovertemplate="%{label}: %{value:,} (%{percent})<extra></extra>",
             textfont_size=11,
